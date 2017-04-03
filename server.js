@@ -43,7 +43,7 @@ var SummonerSchema = new Schema({
     'games':[GamesSchema]
 });
 
-var Summoner = mongoose.model('Summoner', SummonerSchema);
+var Summoner = mongoose.model('Summoner', SummonerSchema);  
 
 // routes ======================================================================
 
@@ -115,7 +115,7 @@ var Summoner = mongoose.model('Summoner', SummonerSchema);
         
     });
 
-    // create todo and send back all todos after creation
+    // get matches from riot api for summoner_id
     app.get('/api/summoner/:summoner_id/matches', function(req, res) {
         
         var summonerid = req.params.summoner_id;
@@ -135,18 +135,18 @@ var Summoner = mongoose.model('Summoner', SummonerSchema);
         var req = https.request(options, (res) => {
             //console.log('statusCode:', res.statusCode);
             //console.log('headers:', res.headers);
-            var match_data_string = "";
+            var matches_data_string = "";
 
             res.on('data', function(data, res) {
                 
-                match_data_string += data;
+                matches_data_string += data;
                 
             });
 
             res.on('end', function(){
                 
                
-                var SummonerMatchesDto = JSON.parse(match_data_string);
+                var SummonerMatchesDto = JSON.parse(matches_data_string);
                 
                 Summoner.findOne({_id: summonerid}, function(err, summoner){
 
@@ -183,6 +183,50 @@ var Summoner = mongoose.model('Summoner', SummonerSchema);
         req.end();
         
        
+
+    });
+
+    app.get('/api/summoner/:summoner_id/match/:match_id', function(req, res) {
+        
+        
+        var match_id = req.params.match_id;
+
+        var options = {
+            hostname: 'euw.api.riotgames.com',
+            port: 443,
+            path: '/api/lol/EUW/v2.2/match/' + match_id + '?includeTimeline=false&api_key=07b3b5ea-9c79-4856-bbc5-cd50a2aad139',
+            method: 'GET'
+        }
+
+        console.log(options.path);
+
+        var req = https.request(options, (res) => {
+            
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
+            
+            var match_data_string = "";
+
+            res.on('data', function(data, res) {
+                
+                match_data_string += data;
+                
+            });
+
+            res.on('end', function(){
+        
+                var MatchDto = JSON.parse(match_data_string);
+
+                console.log(MatchDto.region);
+
+            });
+
+            req.on('error', (e) => {
+                console.error(e);
+             });
+
+            req.end();  
+        });
 
     });
 
