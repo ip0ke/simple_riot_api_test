@@ -14,16 +14,4 @@ function mainController($scope, $http) {
             console.log('Error: ' + data);
         });
 
-    // get matches for summoner id
-    $scope.getMatches = function(id) {
-        $http.get('/api/summoner/' + id + '/matches')
-            .success(function(data) {
-                $scope.summoners = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
-    };
-
 }
