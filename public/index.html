@@ -2,7 +2,7 @@
 <!doctype html>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="scotchTodo">
+<html ng-app="summonerData">
 <head>
     <!-- META -->
     <meta charset="utf-8">
@@ -28,20 +28,21 @@
 <body ng-controller="mainController">
     <div class="container">
 
-        <!-- HEADER AND TODO COUNT -->
-        <div class="jumbotron text-center">
-            <h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
-        </div>
-
         <!-- TODO LIST -->
         <div id="todo-list" class="row">
             <div class="col-sm-4 col-sm-offset-4">
 
-                <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="todo in todos">
-                    <label>
-                        <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-                    </label>
+                <!-- LOOP OVER THE SUMMONERS IN $scope.summoners -->
+                <div ng-repeat="summoner in summoners">
+                    <h3>{{ summoner._id }}</h3>
+                        <table>
+                            <th>
+                                <td>Match ID</td>
+                            </th>
+                            <tr ng-repeat="game in summoner.games">
+                                <td>{{game._id}}</td>
+                            </tr>
+                        </table>
                 </div>
 
             </div>

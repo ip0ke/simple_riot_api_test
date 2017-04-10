@@ -48,6 +48,20 @@ var Summoner = mongoose.model('Summoner', SummonerSchema);
 // routes ======================================================================
 
     // api ---------------------------------------------------------------------
+    
+    app.get('/api/summoners', function (req, res){
+
+         Summoner.find(function(err, summoners) {
+
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                res.send(err)
+
+            res.json(summoners); // return all summoners in JSON format
+        });
+
+    });
+
     // get a summer name by id
     app.get('/api/summoner/:summoner_id', function(req, res) {
 
@@ -60,7 +74,7 @@ var Summoner = mongoose.model('Summoner', SummonerSchema);
 
             if(summonerdata != null) {
 
-                console.log("Found profile id ("+summonerdata.profileId+') in mongodb');
+                console.log("Found profile id ("+summonerdata._id+') in mongodb');
 
             } else {
                 //
@@ -111,12 +125,13 @@ var Summoner = mongoose.model('Summoner', SummonerSchema);
                 req.end();
 
             }
+            console.log('findById end');
         });
-        
+        console.log('get_summonerid end');
     });
 
     // get matches from riot api for summoner_id
-    app.get('/api/summoner/:summoner_id/matches', function(req, res) {
+    app.get('/api/summoner/:summoner_id/loadmatches', function(req, res) {
         
         var summonerid = req.params.summoner_id;
         var date_to = new Date(2017, 2, 18).getTime();
