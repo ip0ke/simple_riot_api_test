@@ -75,6 +75,7 @@ var Summoner = mongoose.model('Summoner', SummonerSchema);
             if(summonerdata != null) {
 
                 console.log("Found profile id ("+summonerdata._id+') in mongodb');
+                res.json(summonerdata);
 
             } else {
                 //
@@ -168,8 +169,11 @@ var Summoner = mongoose.model('Summoner', SummonerSchema);
                     if (err) console.log(err);
 
                     SummonerMatchesDto.matches.forEach(function(entry) {
+                    
                         console.log(entry.matchId);
                         console.log('summoner id: '+summoner._id);
+
+                        /*
                         summoner.games.push({
                             _id: entry.matchId,
                             lane: entry.lane,
@@ -178,12 +182,12 @@ var Summoner = mongoose.model('Summoner', SummonerSchema);
                             timestamp: entry.timestamp
                         });
                         console.log('entry pushed');
-
+                        */
                     });
-                    summoner.save(function (err) {
+                    /*summoner.save(function (err) {
                         if (err) return handleError(err)
                         console.log('Success!');
-                    });
+                    });*/
 
                 });
 

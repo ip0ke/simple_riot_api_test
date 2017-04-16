@@ -34,32 +34,25 @@
 
                 <!-- LOOP OVER THE SUMMONERS IN $scope.summoners -->
                 <div ng-repeat="summoner in summoners">
-                    <h3>{{ summoner._id }}</h3>
-                        <table>
-                            <th>
-                                <td>Match ID</td>
-                            </th>
-                            <tr ng-repeat="game in summoner.games">
-                                <td>{{game._id}}</td>
-                            </tr>
-                        </table>
+                    <h3>{{ summoner.name }}</h3>
+                        
                 </div>
 
             </div>
         </div>
 
         <!-- FORM TO CREATE TODOS -->
-        <div id="todo-form" class="row">
+        <div id="search-form" class="row">
             <div class="col-sm-8 col-sm-offset-2 text-center">
                 <form>
                     <div class="form-group">
 
                         <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+                        <input type="text" class="form-control input-lg text-center" placeholder="Enter summoner name" ng-model="formData.text">
                     </div>
 
                     <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="searchSummonerByName()">Search</button>
                 </form>
             </div>
         </div>
